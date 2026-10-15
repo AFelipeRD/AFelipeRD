@@ -1,0 +1,53 @@
+name: activity
+
+# Regenera assets/activity.svg con métricas reales de GitHub, usando los mismos tokens de diseño del README.
+# - cron: cada 6 horas  - workflow_dispatch: botón manual en la pestaña Actions
+# - push: solo si cambia el generador o los tokens (para ver el rediseño de inmediato)
+on:
+  schedule:
+    - cron: "17 */6 * * *"
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "scripts/build_activity.py"
+      - "scripts/ds.py"
+      - "scripts/design_tokens.py"
+      - "assets/tokens.json"
+
+permissions:
+  contents: write          # necesario para que el bot haga commit de activity.svg
+
+concurrency:
+  group: activity
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # Solo librería estándar: no hay dependencias que instalar.
+      - name: Generar activity.svg
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_USER: ${{ github.repository_owner }}
+        run: python scripts/build_activity.py
+
+      - name: Commit si hubo cambios
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/activity.svg
+          if git diff --cached --quiet; then
+            echo "Sin cambios."
+          else
+            git commit -m "chore(activity): sync metrics"
+            git push
+          fi
