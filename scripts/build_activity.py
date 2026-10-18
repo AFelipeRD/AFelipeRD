@@ -14,10 +14,12 @@ Modos:
 """
 import argparse
 import datetime as dt
+import hashlib
 import json
 import os
 import pathlib
 import random
+import re
 import sys
 import textwrap
 import urllib.request
@@ -25,9 +27,48 @@ import urllib.request
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 from ds import ROOT, d, doc, iso_cube, save  # noqa: E402
 
-# Repos que se muestran como tarjetas (el orden es el del README). Edita esta lista si cambias tus repos.
-REPOS = ["proyecto-fuga-skandia", "DiFarmaPython-Django", "SecureCodeGit",
-         "ComandosGit", "IntroGitHub", "Intro-Github"]
+# Repos que se muestran como tarjetas: se editan en repos.json (raíz del repo), no aquí.
+DEFAULT_REPOS = ["proyecto-fuga-skandia", "DiFarmaPython-Django", "SecureCodeGit", "ComandosGit", "IntroGitHub", "Intro-Github"]
+
+
+def load_repos():
+    try:
+        names = json.loads((ROOT / "repos.json").read_text(encoding="utf-8"))["repos"]
+        names = [n.strip() for n in names if n.strip()]
+        return names[:12] or DEFAULT_REPOS
+    except Exception:
+        return DEFAULT_REPOS
+
+
+REPOS = load_repos()
+README = ROOT / "README.md"
+START, END = "<!-- REPOS:START -->", "<!-- REPOS:END -->"
+
+
+def sync_files(login, out_dir):
+    """Borra tarjetas de repos que ya no están en repos.json y reescribe el bloque de tarjetas del README."""
+    keep = {f"repo_{n.lower()}.svg" for n in REPOS}
+    for f in out_dir.glob("repo_*.svg"):
+        if f.name not in keep:
+            f.unlink()
+    if not README.exists():
+        return
+    t = README.read_text(encoding="utf-8")
+    if START not in t or END not in t:
+        print("  (README sin marcadores REPOS: no se actualiza el bloque de tarjetas)")
+        return
+    rows = []
+    for i in range(0, len(REPOS), 3):
+        cells = []
+        for n in REPOS[i:i + 3]:
+            h = hashlib.sha1((out_dir / f"repo_{n.lower()}.svg").read_bytes()).hexdigest()[:7]
+            cells.append(f'<a href="https://github.com/{login}/{n}"><img src="assets/repo_{n.lower()}.svg?v={h}" width="32%" alt="Repositorio {n}"></a>')
+        rows.append("".join(cells))
+    block = START + "\n" + "\n".join(rows) + "\n" + END
+    new = re.sub(re.escape(START) + r".*?" + re.escape(END), lambda m: block, t, flags=re.S)
+    if new != t:
+        README.write_text(new, encoding="utf-8")
+
 
 USER_Q = """
 query($login:String!){ user(login:$login){
@@ -250,6 +291,8 @@ def main():
     save(a.out, render_activity(user, a.demo, a.placeholder), a.preview)
     for i, n in enumerate(REPOS):
         save(out_dir / f"repo_{n.lower()}.svg", repo_card(n, repos.get(n), i), a.preview)
+    if not a.demo:
+        sync_files(os.environ.get("GH_USER", "AFelipeRD"), out_dir)
     print("OK", a.out, "+", len(REPOS), "tarjetas de repo")
 
 

@@ -5,8 +5,10 @@ Ingeniero de Sistemas y Data Engineer con experiencia en el sector financiero, d
 <img src="assets/deck.svg?v=1" width="100%" alt="Arquitectura de datos en GCP y BigQuery, servidores MCP locales, modelos de ML e ingeniería de repositorios">
 <img src="assets/activity.svg?v=1" width="100%" alt="Actividad en GitHub: contribuciones, repositorios, rachas y lenguajes">
 
-<a href="https://github.com/AFelipeRD/proyecto-fuga-skandia"><img src="assets/repo_proyecto-fuga-skandia.svg?v=1" width="32%" alt="Repositorio proyecto-fuga-skandia"></a><a href="https://github.com/AFelipeRD/DiFarmaPython-Django"><img src="assets/repo_difarmapython-django.svg?v=1" width="32%" alt="Repositorio DiFarmaPython-Django"></a><a href="https://github.com/AFelipeRD/SecureCodeGit"><img src="assets/repo_securecodegit.svg?v=1" width="32%" alt="Repositorio SecureCodeGit"></a>
-<a href="https://github.com/AFelipeRD/ComandosGit"><img src="assets/repo_comandosgit.svg?v=1" width="32%" alt="Repositorio ComandosGit"></a><a href="https://github.com/AFelipeRD/IntroGitHub"><img src="assets/repo_introgithub.svg?v=1" width="32%" alt="Repositorio IntroGitHub"></a><a href="https://github.com/AFelipeRD/Intro-Github"><img src="assets/repo_intro-github.svg?v=1" width="32%" alt="Repositorio Intro-Github"></a>
+<!-- REPOS:START -->
+<a href="https://github.com/AFelipeRD/proyecto-fuga-skandia"><img src="assets/repo_proyecto-fuga-skandia.svg?v=5f36e9f" width="32%" alt="Repositorio proyecto-fuga-skandia"></a><a href="https://github.com/AFelipeRD/DiFarmaPython-Django"><img src="assets/repo_difarmapython-django.svg?v=5d05438" width="32%" alt="Repositorio DiFarmaPython-Django"></a><a href="https://github.com/AFelipeRD/SecureCodeGit"><img src="assets/repo_securecodegit.svg?v=fbbc20b" width="32%" alt="Repositorio SecureCodeGit"></a>
+<a href="https://github.com/AFelipeRD/ComandosGit"><img src="assets/repo_comandosgit.svg?v=e6dba22" width="32%" alt="Repositorio ComandosGit"></a><a href="https://github.com/AFelipeRD/IntroGitHub"><img src="assets/repo_introgithub.svg?v=af5b221" width="32%" alt="Repositorio IntroGitHub"></a><a href="https://github.com/AFelipeRD/Intro-Github"><img src="assets/repo_intro-github.svg?v=cd32489" width="32%" alt="Repositorio Intro-Github"></a>
+<!-- REPOS:END -->
 
 <p align="center">
   <a href="https://linkedin.com/in/afeliperincond">LinkedIn</a> ·
