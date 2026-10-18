@@ -74,7 +74,8 @@ GitHub muestra el README en una columna de unos 700 a 900 px según la ventana. 
 pip install numpy pillow opencv-python-headless scipy cairosvg
 python scripts/design_tokens.py                          # tokens + verificación WCAG
 python scripts/build_portrait.py foto.png                # retrato vectorial
-python scripts/build_character.py                        # personaje 3D + pixel art + mapas del holograma
+python scripts/build_character.py                        # personaje 3D + mapas del holograma
+python scripts/build_avatar.py                           # retrato realista + pixel art de perfil
 python scripts/generate_hologram.py                      # assets/visual_core.webp (holograma 3D)
 python scripts/build_assets.py                           # assets/hero.svg y assets/deck.svg
 python scripts/build_activity.py --placeholder           # estado vacío inicial (luego lo llena el workflow)
@@ -97,3 +98,17 @@ Personaje 3D estático modelado al estilo de los juegos de Mario (referencia: Lu
 - **Pixel art:** sale del mismo render (promedio por área, paleta de 36 a 40 colores, contorno de 1 px), así que la cara es idéntica en ambas versiones.
 - **Archivos:** `character_3d.png` (cuerpo), `character_bust.png` (busto), `avatar_pixel.png` (foto de perfil de GitHub, 504 x 504), `character_pixel_full.png`, y `character_color.png` / `character_depth.png` (entradas del holograma).
 - **Ajustes rápidos** (en `scripts/build_character.py`): color de camiseta (`ALB`, material 1), forma de la gorra (`dome`, `bent_brim`), tamaño de las gafas (`paint_character`, bloque de gafas). Resolución: `SCALE=240`; vista rápida: `SCALE=100`.
+
+## 11. Foto de perfil (retrato realista y pixel art)
+
+`scripts/build_avatar.py` es independiente del modelo 3D del carrusel.
+
+- **Retrato plano realista:** cabeza con proporciones humanas (cráneo, mandíbula, pómulos y nariz con puente, punta y aletas), gorra de una sola pieza (la visera nace de la cúpula con unión suave y las costuras continúan hasta la visera), gafas con volumen real que proyectan sombra, sombras suaves, oclusión ambiental y piel con dispersión. Ojos cafés pintados con iris, párpados y brillo; el reflejo azul vive solo en las lunas.
+- **Pixel art:** sale de ese retrato (mediana, paleta de 44 colores, contorno de 1 px), con los ojos cafés colocados pixel a pixel, tinte azul en las lunas, fondo con tramado Bayer, cubos de marca y destellos. Resultado: `assets/avatar_pixel.png` (504 x 504, foto de perfil de GitHub).
+- **Uso:** `python scripts/build_avatar.py` (requiere `scipy`). `SCALE=140` para una vista rápida.
+
+## 12. Repos del README (config en un solo archivo)
+
+La lista de proyectos que muestran las tarjetas animadas está en `repos.json`. El workflow `activity` lee ese archivo cada 6 horas (y cuando cambia): regenera las tarjetas con la descripción, el lenguaje y las estrellas reales de cada repo, borra las tarjetas de repos que ya no están y reescribe el bloque entre `<!-- REPOS:START -->` y `<!-- REPOS:END -->` del README. Para cambiar un proyecto solo hay que editar `repos.json`.
+
+`.gitattributes` marca `assets/**` como generado para que GitHub no cuente esos archivos en las estadísticas de lenguajes del repo.

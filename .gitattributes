@@ -1,3 +1,9 @@
 * text=auto eol=lf
 *.gif binary
 *.png binary
+*.webp binary
+
+# Los activos generados no cuentan para el idioma del repo
+# (sin esto, los fragmentos *.frag se detectan como JavaScript y el perfil muestra el lenguaje equivocado)
+assets/** linguist-generated=true
+assets/** linguist-detectable=false
