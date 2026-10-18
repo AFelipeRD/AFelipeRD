@@ -27,10 +27,14 @@ LIGHT = dict(
     sig=_L["accent-signal"], dat=_L["accent-data"], sigd=to_hex(0.72, 0.10, 72), datd=to_hex(0.68, 0.07, 209.5),
 )
 SPRING, EASE = T["motion"]["spring"], T["motion"]["ease-out"]
+# True  -> respeta "reducir movimiento" del sistema del visitante (accesible, pero se ve quieto si lo tiene activo).
+# False -> el perfil siempre se anima, sin clic y sin depender de la preferencia del sistema.
+RESPECT_REDUCED_MOTION = False
 MONO, SANS = T["type"]["mono"], T["type"]["sans"]
 
 
 def style(extra=""):
+    rm = "@media (prefers-reduced-motion: reduce){*{animation:none!important}}" if RESPECT_REDUCED_MOTION else ""
     dark = ";".join(f"--{k}:{v}" for k, v in DARK.items())
     light = ";".join(f"--{k}:{v}" for k, v in LIGHT.items())
     return f"""<style>
@@ -63,6 +67,13 @@ text{{font-family:{MONO};fill:var(--t2)}}
 .pulse{{animation:pulse 2.6s ease-in-out infinite}}
 .blink{{animation:blink 1.5s steps(1) infinite}}
 .travel{{animation:travel var(--tt,3.6s) cubic-bezier(.45,0,.25,1) infinite}}
+.float{{animation:float 3.6s ease-in-out infinite}}
+.shadow{{transform-box:fill-box;transform-origin:center;animation:shadowp 3.6s ease-in-out infinite}}
+.bob{{animation:float 4.4s ease-in-out infinite}}
+.grow-y{{transform-box:fill-box;transform-origin:50% 100%;animation:growy 1.2s cubic-bezier(.34,1.56,.64,1) backwards}}
+@keyframes float{{0%,100%{{transform:translateY(0)}}50%{{transform:translateY(-4px)}}}}
+@keyframes shadowp{{0%,100%{{transform:scale(1);opacity:.35}}50%{{transform:scale(.82);opacity:.2}}}}
+@keyframes growy{{from{{transform:scaleY(0)}}}}
 @keyframes rise{{from{{opacity:0;transform:translateY(8px)}}}}
 @keyframes pop{{from{{opacity:0;transform:scale(.55)}}}}
 @keyframes draw{{from{{stroke-dashoffset:1}}}}
@@ -71,7 +82,7 @@ text{{font-family:{MONO};fill:var(--t2)}}
 @keyframes pulse{{0%,100%{{opacity:.5}}50%{{opacity:1}}}}
 @keyframes blink{{0%,60%{{opacity:1}}61%,100%{{opacity:.15}}}}
 @keyframes travel{{0%{{transform:translateX(0);opacity:0}}12%{{opacity:1}}88%{{opacity:1}}100%{{transform:translateX(var(--td,200px));opacity:0}}}}
-@media (prefers-reduced-motion: reduce){{*{{animation:none!important}}}}
+{rm}
 {extra}
 </style>"""
 
@@ -124,3 +135,33 @@ def save(path, svg, preview_dir=None):
             cairosvg.svg2png(bytestring=finalize(svg, True).encode(), write_to=str(pv / (path.stem + ".png")), scale=1.5)
         except Exception as e:  # la vista previa es opcional
             print("  (sin vista previa:", e, ")")
+
+
+def _dim(accent):
+    return {"dat": "datd", "sig": "sigd"}.get(accent, "bds")
+
+
+def iso_cube(cx, cy, s=22, accent="bds", h=None, delay=0.0, shadow=True, float_=True):
+    """Prisma isométrico (cara superior clara, izquierda media, derecha oscura) con sombra proyectada.
+    (cx, cy) = centro de la base. h = alto del prisma (por defecto ~cubo)."""
+    w, hh = s, s / 2
+    H = h if h is not None else s * 0.95
+    top = f"{cx},{cy - H - hh} {cx + w},{cy - H} {cx},{cy - H + hh} {cx - w},{cy - H}"
+    left = f"{cx - w},{cy - H} {cx},{cy - H + hh} {cx},{cy + hh} {cx - w},{cy}"
+    right = f"{cx},{cy - H + hh} {cx + w},{cy - H} {cx + w},{cy} {cx},{cy + hh}"
+    stroke = f"var(--{_dim(accent)})"
+    sh = (f'<ellipse class="shadow" cx="{cx}" cy="{cy + hh + 5}" rx="{w * 0.95}" ry="{w * 0.30}" fill="#000" '
+          f'style="animation-delay:-{delay:.2f}s"/>') if shadow else ""
+    cls = "float" if float_ else ""
+    base = "var(--s2)" if accent == "bds" else f"var(--{accent})"
+    o = (0.9, 0.55, 0.30) if accent != "bds" else (1.0, 0.75, 0.55)
+    return (f'{sh}<g class="{cls}" style="animation-delay:-{delay:.2f}s">'
+            f'<polygon points="{left}" fill="{base}" fill-opacity="{o[1]}" stroke="{stroke}" stroke-width="1"/>'
+            f'<polygon points="{right}" fill="{base}" fill-opacity="{o[2]}" stroke="{stroke}" stroke-width="1"/>'
+            f'<polygon points="{top}" fill="{base}" fill-opacity="{o[0]}" stroke="{stroke}" stroke-width="1"/></g>')
+
+
+def sphere_defs(ident, accent):
+    """Gradiente radial para que un círculo parezca una esfera iluminada desde arriba-izquierda."""
+    return (f'<radialGradient id="{ident}" cx=".35" cy=".30" r=".78"><stop offset="0" style="stop-color:var(--t1)" stop-opacity=".95"/>'
+            f'<stop offset=".30" style="stop-color:var(--{accent})"/><stop offset="1" style="stop-color:var(--{_dim(accent)})"/></radialGradient>')
