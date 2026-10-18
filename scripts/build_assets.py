@@ -110,7 +110,7 @@ def hero(embed_png=None):
     r1, c1 = marquee(["GCP", "BigQuery", "ETL/ELT", "APIs REST", "Python", "SQL", "SAS", "Data Quality", "Power BI", "Looker"], 164, "mq1", 26, False, "dat")
     r2, c2 = marquee(["Ollama", "vLLM", "MCP", "Laya", "RAG", "Agentic Workflows", "Scikit-Learn", "XGBoost", "Git", "GitHub Actions", "CI/CD"], 190, "mq2", 30, True, "sig")
     b.append(f'<g clip-path="url(#mq)" class="in"{d(0.5)}>{r1}{r2}</g>')
-    # --- métricas (anillo 95 %, 250+, 3+ años)
+    # --- métricas (anillo 95 %, 250+, 2+ años)
     tiles = []
     for i, x in enumerate((24, 136, 248)):
         tiles.append(f'<g class="pop"{d(0.7 + i * 0.12)}><rect class="node" x="{x}" y="222" width="104" height="96" rx="10"/></g>')
@@ -120,7 +120,7 @@ def hero(embed_png=None):
                  f'<text class="small" x="76" y="298" text-anchor="middle">reducción en</text><text class="small" x="76" y="309" text-anchor="middle">procesamiento</text></g>')
     tiles.append(f'<g class="in"{d(1.12)}><text class="sans" x="188" y="262" text-anchor="middle" style="font-size:25px;font-weight:800;fill:var(--dat);letter-spacing:-.02em">250+</text>'
                  f'<text class="small" x="188" y="298" text-anchor="middle">stakeholders</text><text class="small" x="188" y="309" text-anchor="middle">atendidos</text></g>')
-    tiles.append(f'<g class="in"{d(1.24)}><text class="sans" x="300" y="262" text-anchor="middle" style="font-size:25px;font-weight:800;fill:var(--sig);letter-spacing:-.02em">3+</text>'
+    tiles.append(f'<g class="in"{d(1.24)}><text class="sans" x="300" y="262" text-anchor="middle" style="font-size:25px;font-weight:800;fill:var(--sig);letter-spacing:-.02em">2+</text>'
                  f'<text class="small" x="300" y="298" text-anchor="middle">años de datos</text><text class="small" x="300" y="309" text-anchor="middle">habilitados</text></g>')
     b.append("".join(tiles))
     # --- ventana del holograma 3D
@@ -146,7 +146,7 @@ def hero(embed_png=None):
 @keyframes typing{{from{{transform:scaleX(0)}}}}
 @keyframes sx{{to{{transform:translateX(316px)}}}}"""
     return doc(W, H, "".join(b), "Andres Felipe Rincon Duarte, Data Engineer y Applied AI Engineer",
-               "Retrato con anillos orbitales, nombre y estado disponible, tecnologías en carrusel, métricas (95 %, 250+, 3+ años) y un holograma 3D de partículas que se transforma en nube, red neuronal, servidor MCP y rostro.", css)
+               "Retrato con anillos orbitales, nombre y estado disponible, tecnologías en carrusel, métricas (95 %, 250+, 2+ años) y un holograma 3D de partículas que se transforma en nube, red neuronal, servidor MCP y rostro.", css)
 
 
 # ----------------------------------------------------------------------------- deck

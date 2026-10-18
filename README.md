@@ -1,4 +1,4 @@
-<img src="assets/hero.svg?v=1" width="100%" alt="Andres Felipe Rincon Duarte, Data Engineer y Applied AI Engineer. Disponible de inmediato. Holograma 3D de partículas que se transforma en nube, red neuronal, servidor MCP y rostro.">
+<img src="assets/hero.svg?v=2" width="100%" alt="Andres Felipe Rincon Duarte, Data Engineer y Applied AI Engineer. Disponible de inmediato. Holograma 3D de partículas que se transforma en nube, red neuronal, servidor MCP y rostro.">
 
 Ingeniero de Sistemas y Data Engineer con experiencia en el sector financiero, diseñando pipelines ETL/ELT sobre GCP/BigQuery con Python, SQL y SAS. De forma independiente desarrollo IA aplicada: modelos locales (Ollama, vLLM), servidores MCP y análisis de texto con Laya. Remoto (Colombia/LatAm), híbrido o presencial en Bogotá D.C.
 
