@@ -6,7 +6,7 @@ Ingeniero de Sistemas y Data Engineer con experiencia en el sector financiero, d
 <img src="assets/activity.svg?v=1" width="100%" alt="Actividad en GitHub: contribuciones, repositorios, rachas y lenguajes">
 
 <!-- REPOS:START -->
-<a href="https://github.com/AFelipeRD/AFelipeRD"><img src="assets/repo_afeliperd.svg?v=6bfd082" width="32%" alt="Repositorio AFelipeRD"></a><a href="https://github.com/AFelipeRD/AI_Nexus_Core"><img src="assets/repo_ai_nexus_core.svg?v=9b51974" width="32%" alt="Repositorio AI_Nexus_Core"></a><a href="https://github.com/AFelipeRD/proyecto-fuga-skandia"><img src="assets/repo_proyecto-fuga-skandia.svg?v=583f486" width="32%" alt="Repositorio proyecto-fuga-skandia"></a>
+<a href="https://github.com/AFelipeRD/AFelipeRD"><img src="assets/repo_afeliperd.svg?v=6bfd082" width="32%" alt="Repositorio AFelipeRD"></a><a href="https://github.com/AFelipeRD/AI_Nexus_Core"><img src="assets/repo_ai_nexus_core.svg?v=019123f" width="32%" alt="Repositorio AI_Nexus_Core"></a><a href="https://github.com/AFelipeRD/proyecto-fuga-skandia"><img src="assets/repo_proyecto-fuga-skandia.svg?v=583f486" width="32%" alt="Repositorio proyecto-fuga-skandia"></a>
 <a href="https://github.com/AFelipeRD/DiFarmaPython-Django"><img src="assets/repo_difarmapython-django.svg?v=90cadd4" width="32%" alt="Repositorio DiFarmaPython-Django"></a>
 <!-- REPOS:END -->
 
